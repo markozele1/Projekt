@@ -86,8 +86,24 @@ def poljeAction(igrac,action):
 
 #TODO pokazi rezultat kocke
 def showDice(diceNumber1, diceNumber2):
-    pass
-    
+    diceFrame1 = Frame(root, width=85, height=85)
+    diceFrame2 = Frame(root, width=85, height=85)
+    diceFrame1.pack()
+    diceFrame2.pack()
+    diceFrame1.place(anchor='se', relx=0.9, rely=0.95)
+    diceFrame2.place(anchor='sw', relx=0.9, rely=0.95)
+    dice1_image = Image.open(str(diceNumber1) + ".png")
+    dice2_image = Image.open(str(diceNumber2) + ".png")
+    dice1 = ImageTk.PhotoImage(dice1_image)
+    dice2 = ImageTk.PhotoImage(dice2_image)
+    diceLabel1 = Label(diceFrame1, image=dice1)
+    diceLabel2 = Label(diceFrame2, image=dice2)
+    diceLabel1.image = dice1
+    diceLabel2.image = dice2
+    diceLabel1.pack()
+    diceLabel2.pack()
+
+
 #* sve je roknuto u main jer je tak lakse neke stvari napravit
 def main():
     #* buttoni za playere, sve se moze na pocetku iskazat, netreba .config();
@@ -113,3 +129,7 @@ def main():
 if(__name__ == "__main__"):
     test_fn() #!provjerava jel radi file link
     main()
+
+#TODO animacija kocke (kada se klikne roll se prikazu dvije kocke s brojkama)
+#TODO kupnja polja
+#TODO placanje vlasniku ako naletis na kupljeno polje
