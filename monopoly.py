@@ -111,5 +111,5 @@ def main():
 #* mjesto gdje main pocinje
 #TODO NAPRAVI NES JBT, probaj 
 if(__name__ == "__main__"):
-    test_fn() #!provjerava jel radi file link
+    #test_fn() #!provjerava jel radi file link
     main()
