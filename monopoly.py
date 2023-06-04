@@ -18,10 +18,10 @@ label = Label(framePloce, image=ploca)
 label.pack()
 
 #*igraci i pocetno stanje
-p1 = {"polje":0,"pare":1500,"vlasnistvo":["1"],"u_zatvoru":False,"bankrot":False}
-p2 = {"polje":0,"pare":1500,"vlasnistvo":["2"],"u_zatvoru":False,"bankrot":False}
-p3 = {"polje":0,"pare":1500,"vlasnistvo":["3"],"u_zatvoru":False,"bankrot":False}
-p4 = {"polje":0,"pare":1500,"vlasnistvo":["4"],"u_zatvoru":False,"bankrot":False}
+p1 = {"polje":0,"pare":1500,"vlasnistvo":["1"],"u_zatvoru":False,"bankrot":False, "ime": "p1"}
+p2 = {"polje":0,"pare":1500,"vlasnistvo":["2"],"u_zatvoru":False,"bankrot":False, "ime": "p2"}
+p3 = {"polje":0,"pare":1500,"vlasnistvo":["3"],"u_zatvoru":False,"bankrot":False, "ime": "p3"}
+p4 = {"polje":0,"pare":1500,"vlasnistvo":["4"],"u_zatvoru":False,"bankrot":False, "ime": "p4"}
 
 #*lista u kojoj se spremaju igraci i varijabla u kojoj se prati trenutni igrac
 igraci = [p1,p2,p3,p4]
@@ -32,7 +32,7 @@ def showPlayerStats(igrac):
     frameStats = Frame(root, width = 250, height = 300)
     frameStats.pack()
     frameStats.place(anchor = 'center', relx = 0.83, rely = 0.25)
-    stats = "Pare: " + str(igrac["pare"]) + "\nVlasnistvo: " + str(igrac["vlasnistvo"]) + "\nPolje: " + str(igrac["polje"])
+    stats = "Pare: " + str(igrac["pare"]) + "\nBroj vlasnistva: " + str(len(igrac["vlasnistvo"])) + "\nPolje: " + str(igrac["polje"])
     labelStats = Label(frameStats, text=stats, font=("Calibri", 16))
     labelStats.pack()
 
@@ -60,14 +60,24 @@ def dice(igrac):
 def poljeCheck(igrac):
     trenutno_polje = polja[igrac["polje"]]
     if("nonbuy" in trenutno_polje):
-        poljeAction(igrac,trenutno_polje[1])
+        poljeAction(igrac,trenutno_polje)
     else:
-        #TODO kupnja nonbuy polja
+        kupiPolje(igrac, trenutno_polje)
         print(trenutno_polje["ime"])
 
 #* provjerava posebne kartice
 #TODO napravit sve sto pise TODO u printovima
-def poljeAction(igrac,action):
+
+def kupiPolje(igrac, trenutno_polje):
+    igrac["vlasnistvo"].append(trenutno_polje["ime"])
+    trenutno_polje["vlasnik"] = igrac["ime"]
+    #TODO treba li igrac dati pare ili nes?
+    # ne stane sav tekst u window, pa sam izbacio
+    # prikazivanje vlasnistva
+
+
+def poljeAction(igrac,trenutno_polje):
+    action = trenutno_polje[1]
     if(action == "tax"):
         igrac["pare"] -= 200
     elif(action == "luxtax"):
@@ -83,11 +93,28 @@ def poljeAction(igrac,action):
         igrac["u_zatvoru"] = True
     elif(action == "parkingCheck"):
         print("TODO parking")
+    # jel fali taxing na tudim zemljistima?
+    # if so reci pa cu onda dodati taj dio
 
-#TODO pokazi rezultat kocke
 def showDice(diceNumber1, diceNumber2):
-    pass
-    
+    diceFrame1 = Frame(root, width=85, height=85)
+    diceFrame2 = Frame(root, width=85, height=85)
+    diceFrame1.pack()
+    diceFrame2.pack()
+    diceFrame1.place(anchor='se', relx=0.9, rely=0.95)
+    diceFrame2.place(anchor='sw', relx=0.9, rely=0.95)
+    dice1_image = Image.open(str(diceNumber1) + ".png")
+    dice2_image = Image.open(str(diceNumber2) + ".png")
+    dice1 = ImageTk.PhotoImage(dice1_image)
+    dice2 = ImageTk.PhotoImage(dice2_image)
+    diceLabel1 = Label(diceFrame1, image=dice1)
+    diceLabel2 = Label(diceFrame2, image=dice2)
+    diceLabel1.image = dice1
+    diceLabel2.image = dice2
+    diceLabel1.pack()
+    diceLabel2.pack()
+
+
 #* sve je roknuto u main jer je tak lakse neke stvari napravit
 def main():
     #* buttoni za playere, sve se moze na pocetku iskazat, netreba .config();
@@ -111,5 +138,12 @@ def main():
 #* mjesto gdje main pocinje
 #TODO NAPRAVI NES JBT, probaj 
 if(__name__ == "__main__"):
+<<<<<<< HEAD
     #test_fn() #!provjerava jel radi file link
     main()
+=======
+    test_fn() #!provjerava jel radi file link
+    main()
+
+#TODO placanje vlasniku ako naletis na kupljeno polje
+>>>>>>> refs/remotes/origin/main
