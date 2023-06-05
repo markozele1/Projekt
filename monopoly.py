@@ -70,16 +70,16 @@ def poljeCheck(igrac):
         if(messagebox.askyesno('Kupnja', f'Hoces li kupiti ovo polje? \n {trenutno_polje["ime"]}')):
             kupiPolje(igrac, trenutno_polje)
             print(trenutno_polje["ime"])
-    elif(trenutno_polje["vlasnik"] != trenutni_igrac["ime"]):
+    elif(trenutno_polje["vlasnik"] != igrac["ime"]):
         for x in trenutno_polje:
             if (x == "ime" or x == "vlasnik" or x == "cijenaKuce" or x == "cijena"):
                 continue
-            if (trenutno_polje[x][0] and trenutni_igrac["pare"] > trenutno_polje[x][0]):
-                trenutni_igrac["pare"] -= trenutno_polje[x][1]
+            if (trenutno_polje[x][0] and igrac["pare"] > trenutno_polje[x][0]):
+                igrac["pare"] -= trenutno_polje[x][1]
                 trenutno_polje["vlasnik"]["pare"] += trenutno_polje[x][1]
             else:
                 messagebox.showerror("Rip bozo", "Nemas prebijenih parica brat moj")
-                igraci.remove(trenutni_igrac)
+                igraci.remove(igrac)
 
 #* provjerava posebne kartice
 #TODO napravit sve sto pise TODO u printovima
