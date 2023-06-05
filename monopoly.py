@@ -109,8 +109,8 @@ def showDice(diceNumber1, diceNumber2):
     dice2 = ImageTk.PhotoImage(dice2_image)
     diceLabel1 = Label(diceFrame1, image=dice1)
     diceLabel2 = Label(diceFrame2, image=dice2)
-    diceLabel1.image = dice1
-    diceLabel2.image = dice2
+    diceLabel1.Image = dice1
+    diceLabel2.Image = dice2
     diceLabel1.pack()
     diceLabel2.pack()
 
@@ -138,12 +138,7 @@ def main():
 #* mjesto gdje main pocinje
 #TODO NAPRAVI NES JBT, probaj 
 if(__name__ == "__main__"):
-<<<<<<< HEAD
-    #test_fn() #!provjerava jel radi file link
-    main()
-=======
     test_fn() #!provjerava jel radi file link
     main()
 
 #TODO placanje vlasniku ako naletis na kupljeno polje
->>>>>>> refs/remotes/origin/main
