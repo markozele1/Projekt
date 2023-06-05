@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from PIL import ImageTk, Image
 import random
 from zemlje import *
@@ -18,10 +19,10 @@ label = Label(framePloce, image=ploca)
 label.pack()
 
 #*igraci i pocetno stanje
-p1 = {"polje":0,"pare":1500,"vlasnistvo":["1"],"u_zatvoru":False,"bankrot":False, "ime": "p1"}
-p2 = {"polje":0,"pare":1500,"vlasnistvo":["2"],"u_zatvoru":False,"bankrot":False, "ime": "p2"}
-p3 = {"polje":0,"pare":1500,"vlasnistvo":["3"],"u_zatvoru":False,"bankrot":False, "ime": "p3"}
-p4 = {"polje":0,"pare":1500,"vlasnistvo":["4"],"u_zatvoru":False,"bankrot":False, "ime": "p4"}
+p1 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "p1"}
+p2 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "p2"}
+p3 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "p3"}
+p4 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "p4"}
 
 #*lista u kojoj se spremaju igraci i varijabla u kojoj se prati trenutni igrac
 igraci = [p1,p2,p3,p4]
@@ -35,7 +36,11 @@ def showPlayerStats(igrac):
     stats = "Pare: " + str(igrac["pare"]) + "\nBroj vlasnistva: " + str(len(igrac["vlasnistvo"])) + "\nPolje: " + str(igrac["polje"])
     labelStats = Label(frameStats, text=stats, font=("Calibri", 16))
     labelStats.pack()
-
+    showButton = Button(root, text = "Prikaz vlasnistva", font = ("Calibri", 16), command = lambda: showVlasnistvo(igrac) )
+    showButton.place(x = 670, y = 250)
+def showVlasnistvo(igrac):
+    messagebox.showinfo("Info",f'{igrac["vlasnistvo"]}')
+    
 #*kocke, daju broj za kolko ici, premjestaju na sljedeceg igraca
 def dice(igrac):
     global trenutni_igrac
@@ -61,17 +66,29 @@ def poljeCheck(igrac):
     trenutno_polje = polja[igrac["polje"]]
     if("nonbuy" in trenutno_polje):
         poljeAction(igrac,trenutno_polje)
-    else:
-        kupiPolje(igrac, trenutno_polje)
-        print(trenutno_polje["ime"])
+    elif(not(trenutno_polje["vlasnik"])):
+        if(messagebox.askyesno('Kupnja', f'Hoces li kupiti ovo polje? \n {trenutno_polje["ime"]}')):
+            kupiPolje(igrac, trenutno_polje)
+            print(trenutno_polje["ime"])
+    elif(trenutno_polje["vlasnik"] != trenutni_igrac["ime"]):
+        for x in trenutno_polje:
+            if (x == "ime" or x == "vlasnik" or x == "cijenaKuce" or x == "cijena"):
+                continue
+            if (trenutno_polje[x][0] and trenutni_igrac["pare"] > trenutno_polje[x][0]):
+                trenutni_igrac["pare"] -= trenutno_polje[x][1]
+                trenutno_polje["vlasnik"]["pare"] += trenutno_polje[x][1]
+            else:
+                messagebox.showerror("Rip bozo", "Nemas prebijenih parica brat moj")
+                igraci.remove(trenutni_igrac)
 
 #* provjerava posebne kartice
 #TODO napravit sve sto pise TODO u printovima
 
 def kupiPolje(igrac, trenutno_polje):
-    igrac["vlasnistvo"].append(trenutno_polje["ime"])
-    trenutno_polje["vlasnik"] = igrac["ime"]
-    #TODO treba li igrac dati pare ili nes?
+    if igrac["pare"] >= trenutno_polje["cijena"]:
+        igrac["vlasnistvo"].append(trenutno_polje["ime"])
+        trenutno_polje["vlasnik"] = igrac["ime"]
+        igrac["pare"] -= trenutno_polje["cijena"]
     # ne stane sav tekst u window, pa sam izbacio
     # prikazivanje vlasnistva
 
