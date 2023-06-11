@@ -229,19 +229,19 @@ boardwalk = {"ime": "Boardwalk",
 #?svaki dodatni tko netko posjeduje ce biti +25 na renti, najlakše je da samo tražimo tko sve što ima i onda pozbrajamo rente
 reading_rail = {"ime":"Reading railroad",
                 "cijena":200,
-                "renta":25,
+                "renta":[True,25],
                 "vlasnik":None}
 pennsylvania_rail = {"ime":"Pennsylvania railroad",
                     "cijena":200,
-                    "renta":25,
+                    "renta":[True,25],
                     "vlasnik":None}
 bo_rail = {"ime":"B&O railroad",
                 "cijena":200,
-                "renta":25,
+                "renta":[True,25],
                 "vlasnik":None}
 short_rail = {"ime":"Short line",
               "cijena":200,
-                "renta":25,
+                "renta":[True,25],
                 "vlasnik":None}
 #* utils
 #?samo cijena i vlasnik
