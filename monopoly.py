@@ -43,11 +43,17 @@ def showPlayerStats(igrac):
     stats += str(len(igrac["vlasnistvo"])) + "\nPolje: " + str(igrac["polje"]) + "\nBankrotiro:" + str(igrac["bankrot"])
     labelStats = Label(frameStats, text=stats, font=("Calibri", 16))
     labelStats.pack()
-    showButton = Button(root, text = "Prikaz vlasnistva", font = ("Calibri", 16), command = lambda: showVlasnistvo(igrac) )
-    showButton.place(x = 670, y = 250)
+    infoButton = Button(root, text = "Prikaz vlasnistva", font = ("Calibri", 16), command = lambda: showVlasnistvo(igrac) )
+    infoButton.place(x = 670, y = 250)
+    buyButton = Button(root, text = "Kupi kuće", font = ("Calibri", 16), command = lambda: buy_menue(igrac))
+    buyButton.place(x = 670, y = 300)
+
 #* samo roka kaj tko ima
 def showVlasnistvo(igrac):
-    messagebox.showinfo("Info",f'{igrac["vlasnistvo"]}')
+    tekst = ""
+    for i in range(len(igrac["vlasnistvo"])):
+        tekst += igrac["vlasnistvo"][i]["ime"] + "\n"
+    messagebox.showinfo("Info",f'{tekst}')
     
 #*kocke, daju broj za kolko ici, premjestaju na sljedeceg igraca
 def dice(igrac):
@@ -123,7 +129,7 @@ def poljeCheck(igrac):
 
 def kupiPolje(igrac, trenutno_polje):
     if (igrac["pare"] >= trenutno_polje["cijena"]):
-        igrac["vlasnistvo"].append(trenutno_polje["ime"])
+        igrac["vlasnistvo"].append(trenutno_polje)
         trenutno_polje["vlasnik"] = igrac
         igrac["pare"] -= trenutno_polje["cijena"]
         if("renta" in trenutno_polje):
@@ -132,6 +138,100 @@ def kupiPolje(igrac, trenutno_polje):
             pass
     # ne stane sav tekst u window, pa sam izbacio
     # prikazivanje vlasnistva
+
+def buy_menue(igrac):
+    
+    def buy_menuesub(polje):
+        buy_window = Tk()
+        buy_window.title("Koliko oces kupiti?")
+        # kako  bi switch case ovjde dobro doso jbt
+        if(polje["hotel"][0]):
+            pass
+        elif(polje["4kuca"][0]):
+            hotelButton = Button(buy_window, text = "kupi hotel",command = lambda: buy_house(polje,5))
+            hotelButton.pack()
+        elif(polje["3kuca"][0]):
+            kuca4Button = Button(buy_window, text = "kupi 4 kuce",command=lambda:buy_house(polje,4))
+            kuca4Button.pack()
+            hotelButton = Button(buy_window, text = "kupi hotel",command=lambda:buy_house(polje,5))
+            hotelButton.pack()
+        elif(polje["2kuca"][0]):
+            kuca3Button = Button(buy_window, text = "kupi 3 kuce",command=lambda:buy_house(polje,3))
+            kuca3Button.pack()
+            kuca4Button = Button(buy_window, text = "kupi 4 kuce",command=lambda:buy_house(polje,4))
+            kuca4Button.pack()
+            hotelButton = Button(buy_window, text = "kupi hotel",command=lambda:buy_house(polje,5))
+            hotelButton.pack()
+        elif(polje["1kuca"][0]):
+            kuca2Button = Button(buy_window, text = "kupi 2 kuce",command=lambda:buy_house(polje,2))
+            kuca2Button.pack()
+            kuca3Button = Button(buy_window, text = "kupi 3 kuce",command=lambda:buy_house(polje,3))
+            kuca3Button.pack()
+            kuca4Button = Button(buy_window, text = "kupi 4 kuce",command=lambda:buy_house(polje,4))
+            kuca4Button.pack()
+            hotelButton = Button(buy_window, text = "kupi hotel",command=lambda:buy_house(polje,5))
+            hotelButton.pack()
+        else:
+            kuca1Button = Button(buy_window, text = "kupi 1 kucu", command=lambda:buy_house(polje,1))
+            kuca1Button.pack()
+            kuca2Button = Button(buy_window, text = "kupi 2 kuce",command=lambda:buy_house(polje,2))
+            kuca2Button.pack()
+            kuca3Button = Button(buy_window, text = "kupi 3 kuce",command=lambda:buy_house(polje,3))
+            kuca3Button.pack()
+            kuca4Button = Button(buy_window, text = "kupi 4 kuce",command=lambda:buy_house(polje,4))
+            kuca4Button.pack()
+            hotelButton = Button(buy_window, text = "kupi hotel",command=lambda:buy_house(polje,5))
+            hotelButton.pack()
+
+        def buy_house(polje, naredba):
+            polje["renta"][0] = False
+            if(naredba == 1):
+                polje["1kuca"][0] = True
+                igrac["pare"] -= polje["cijenaKuce"]
+                window.quit()
+                buy_window.quit()
+            elif(naredba == 2):
+                polje["2kuca"][0] = True
+                polje["1kuca"][0] = False
+                igrac["pare"] -= polje["cijenaKuce"] * 2
+                window.quit()
+                buy_window.quit() 
+            elif(naredba == 3):
+                polje["3kuca"][0] = True
+                polje["1kuca"][0] = False
+                polje["2kuca"][0] = False
+                igrac["pare"] -= polje["cijenaKuce"] * 3
+                window.quit()
+                buy_window.quit()
+            elif(naredba == 4):
+                polje["4kuca"][0] = True
+                polje["1kuca"][0] = False
+                polje["2kuca"][0] = False
+                polje["3kuca"][0] = False
+                igrac["pare"] -= polje["cijenaKuce"] * 4
+                window.quit()
+                buy_window.quit()
+            elif(naredba == 5):
+                polje["hotel"][0] = True
+                polje["4kuca"][0] = False
+                polje["1kuca"][0] = False
+                polje["2kuca"][0] = False
+                polje["3kuca"][0] = False
+                igrac["pare"] -= polje["cijenaKuce"] * 5
+                window.quit()
+                buy_window.quit()
+    window = Tk()
+    window.title("Monopoly Buy Menu")
+    #window.geometry("200x200+200+200")
+    label = Label(window, text="Odaberi polje koje kupujes:")
+    label.pack()
+    for i in igrac["vlasnistvo"]:
+        if("1kuca" in i):
+            PoljaButton = Button(window, text = i["ime"], command=lambda: buy_menuesub(i))
+            PoljaButton.pack()
+    window.mainloop()
+
+
 
 #* checka posebna polja
 def poljeAction(igrac,trenutno_polje):
