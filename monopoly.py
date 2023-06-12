@@ -188,29 +188,29 @@ def buy_menue(igrac):
             if(naredba == 1 and igrac["pare"] >= polje["cijenaKuce"]):
                 polje["1kuca"][0] = True
                 igrac["pare"] -= polje["cijenaKuce"]
-                window.quit()
-                buy_window.quit()
+                window.destroy()
+                buy_window.destroy()
             elif(naredba == 2 and igrac["pare"] >= polje["cijenaKuce"]*2):
                 polje["2kuca"][0] = True
                 polje["1kuca"][0] = False
                 igrac["pare"] -= polje["cijenaKuce"] * 2
-                window.quit()
-                buy_window.quit() 
+                window.destroy()
+                buy_window.destroy() 
             elif(naredba == 3 and igrac["pare"] >= polje["cijenaKuce"]*3):
                 polje["3kuca"][0] = True
                 polje["1kuca"][0] = False
                 polje["2kuca"][0] = False
                 igrac["pare"] -= polje["cijenaKuce"] * 3
-                window.quit()
-                buy_window.quit()
+                window.destroy()
+                buy_window.destroy() 
             elif(naredba == 4 and igrac["pare"] >= polje["cijenaKuce"]*4):
                 polje["4kuca"][0] = True
                 polje["1kuca"][0] = False
                 polje["2kuca"][0] = False
                 polje["3kuca"][0] = False
                 igrac["pare"] -= polje["cijenaKuce"] * 4
-                window.quit()
-                buy_window.quit()
+                window.destroy()
+                buy_window.destroy() 
             elif(naredba == 5 and igrac["pare"] >= polje["cijenaKuce"]*5):
                 polje["hotel"][0] = True
                 polje["4kuca"][0] = False
@@ -218,8 +218,8 @@ def buy_menue(igrac):
                 polje["2kuca"][0] = False
                 polje["3kuca"][0] = False
                 igrac["pare"] -= polje["cijenaKuce"] * 5
-                window.quit()
-                buy_window.quit()
+                window.destroy()
+                buy_window.destroy() 
     window = Tk()
     window.title("Monopoly Buy Menu")
     #window.geometry("200x200+200+200")
