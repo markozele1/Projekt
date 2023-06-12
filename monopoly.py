@@ -23,10 +23,10 @@ label.pack()
 
 
 #*igraci i pocetno stanje
-p1 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "kapa"}
-p2 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "pas"}
-p3 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "tačke"}
-p4 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":False,"bankrot":False, "ime": "auto"}
+p1 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":0,"bankrot":False, "ime": "kapa"}
+p2 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":0,"bankrot":False, "ime": "pas"}
+p3 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":0,"bankrot":False, "ime": "tačke"}
+p4 = {"polje":0,"pare":1500,"vlasnistvo":[],"u_zatvoru":0,"bankrot":False, "ime": "auto"}
 
 #*lista u kojoj se spremaju igraci i varijabla u kojoj se prati trenutni igrac
 igraci = [p1,p2,p3,p4]
@@ -63,6 +63,7 @@ def dice(igrac):
     #TODO ako igrac ode u zatvor
     if(igrac["u_zatvoru"]):
         igrac["polje"] = 10
+        igrac["u_zatvoru"] -= 1
     elif(not(igrac["bankrot"])):
         igrac["polje"] += (diceNumber1 + diceNumber2)
         if (igrac["polje"] >= 40):
@@ -248,7 +249,7 @@ def poljeAction(igrac,trenutno_polje):
         print("TODO jail check")
     elif(action == "gotoJail"):
         igrac["polje"] = 10
-        igrac["u_zatvoru"] = True
+        igrac["u_zatvoru"] = 3
     elif(action == "parkingCheck"):
         print("TODO parking")
     # jel fali taxing na tudim zemljistima?
