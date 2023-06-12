@@ -185,25 +185,25 @@ def buy_menue(igrac):
 
         def buy_house(polje, naredba):
             polje["renta"][0] = False
-            if(naredba == 1):
+            if(naredba == 1 and igrac["pare"] >= polje["cijenaKuce"]):
                 polje["1kuca"][0] = True
                 igrac["pare"] -= polje["cijenaKuce"]
                 window.quit()
                 buy_window.quit()
-            elif(naredba == 2):
+            elif(naredba == 2 and igrac["pare"] >= polje["cijenaKuce"]*2):
                 polje["2kuca"][0] = True
                 polje["1kuca"][0] = False
                 igrac["pare"] -= polje["cijenaKuce"] * 2
                 window.quit()
                 buy_window.quit() 
-            elif(naredba == 3):
+            elif(naredba == 3 and igrac["pare"] >= polje["cijenaKuce"]*3):
                 polje["3kuca"][0] = True
                 polje["1kuca"][0] = False
                 polje["2kuca"][0] = False
                 igrac["pare"] -= polje["cijenaKuce"] * 3
                 window.quit()
                 buy_window.quit()
-            elif(naredba == 4):
+            elif(naredba == 4 and igrac["pare"] >= polje["cijenaKuce"]*4):
                 polje["4kuca"][0] = True
                 polje["1kuca"][0] = False
                 polje["2kuca"][0] = False
@@ -211,7 +211,7 @@ def buy_menue(igrac):
                 igrac["pare"] -= polje["cijenaKuce"] * 4
                 window.quit()
                 buy_window.quit()
-            elif(naredba == 5):
+            elif(naredba == 5 and igrac["pare"] >= polje["cijenaKuce"]*5):
                 polje["hotel"][0] = True
                 polje["4kuca"][0] = False
                 polje["1kuca"][0] = False
